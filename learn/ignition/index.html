@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ignition.js Documentation</title>
+  <title>Ignition.js & AudioTools.js Documentation</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -52,61 +52,85 @@
 </head>
 <body>
   <header>
-    <h1>Ignition.js Documentation</h1>
-    <p>JavaScript library for basic ML operations and secure tensor computation</p>
+    <h1>Ignition.js & AudioTools.js Documentation</h1>
+    <p>JavaScript library for ML operations and browser audio features</p>
   </header>
 
   <main>
     <section>
       <h2>Getting Started</h2>
-      <p>Include <code>ignition.js</code> in your project:</p>
-      <pre><code>&lt;script src="ignition.js"&gt;&lt;/script&gt;</code></pre>
-      <p>Make sure to include any dependent files like <code>audtools.js</code> if needed.</p>
+      <p>Include the libraries in your project:</p>
+      <pre><code>&lt;script src="ignition.js"&gt;&lt;/script&gt;
+&lt;script src="audiotools.js"&gt;&lt;/script&gt;</code></pre>
     </section>
 
     <section>
-      <h2>Functions</h2>
+      <h2>Ignition.js Functions</h2>
 
-      <h3>1. <code>topk(arr, k)</code></h3>
+      <h3>topk(arr, k)</h3>
       <p>Returns the top <code>k</code> largest numbers from an array.</p>
-      <pre><code>const arr = [3, 1, 4, 2, 3, 4, 4];
-console.log(topk(arr, 3)); // Output: [4, 4, 4]</code></pre>
+      <pre><code>topk([3,1,4,2,4], 2); // [4,4]</code></pre>
 
-      <h3>2. <code>plus(equat, equat1)</code></h3>
-      <p>Adds two numbers together.</p>
-      <pre><code>console.log(plus(5, 3)); // Output: 8</code></pre>
+      <h3>plus(a, b)</h3>
+      <p>Adds two numbers.</p>
+      <pre><code>plus(5, 3); // 8</code></pre>
 
-      <h3>3. <code>tensor(logic, logic1, logic2, logic3, logic4)</code></h3>
-      <p>Multiplies up to 5 numbers together. Only works with defined numbers.</p>
-      <pre><code>tensor(2, 3, 4); // Multiplies 2 * 3 * 4
-// Note: This is a simple tensor, for secure operations use securetensor()</code></pre>
+      <h3>tensor(...numbers)</h3>
+      <p>Multiplies up to 5 numbers.</p>
+      <pre><code>tensor(2,3,4); // 24 (simple tensor)</code></pre>
 
-      <h3>4. <code>securetensor(...args)</code></h3>
-      <p>Performs multiplication in a sandboxed environment for security.</p>
-      <pre><code>securetensor(2, 3, 4); // Securely multiplies 2 * 3 * 4 in sandbox</code></pre>
+      <h3>securetensor(...args)</h3>
+      <p>Multiplication in a sandbox for security.</p>
+      <pre><code>securetensor(2,3,5);</code></pre>
 
-      <h3>5. <code>params(temp)</code></h3>
-      <p>Sets a global variable <code>x</code> if undefined.</p>
-      <pre><code>params(42); // Sets x = 42 if x is undefined</code></pre>
+      <h3>params(temp)</h3>
+      <p>Sets a global <code>x</code> if undefined.</p>
+      <pre><code>params(42);</code></pre>
 
-      <h3>6. <code>train(file)</code></h3>
-      <p>Reads a file and logs its contents (can be used to train models).</p>
-      <pre><code>const fileInput = document.getElementById('fileInput');
-fileInput.addEventListener('change', (e) =&gt; {
-  train(e.target.files[0]);
-});</code></pre>
+      <h3>train(file)</h3>
+      <p>Reads file content using FileReader.</p>
+      <pre><code>train(myFile);</code></pre>
+    </section>
+
+    <section>
+      <h2>AudioTools.js Functions</h2>
+
+      <h3>newSpeech()</h3>
+      <p>Creates a new SpeechRecognition instance.</p>
+      <pre><code>newSpeech();</code></pre>
+
+      <h3>startSpeech()</h3>
+      <p>Starts speech recognition.</p>
+      <pre><code>startSpeech();</code></pre>
+
+      <h3>toEnglish()</h3>
+      <p>Sets recognition language to English (US).</p>
+      <pre><code>toEnglish();</code></pre>
+
+      <h3>talkNow(text)</h3>
+      <p>Converts text to speech using SpeechSynthesis.</p>
+      <pre><code>talkNow("Hello world");</code></pre>
+
+      <h3>audparams(temp)</h3>
+      <p>Sets a global variable <code>y</code> if undefined.</p>
+      <pre><code>audparams(0.7);</code></pre>
     </section>
 
     <section>
       <h2>Example Usage</h2>
-      <p>Basic example combining functions:</p>
-      <pre><code>const arr = [10, 20, 5, 30];
-console.log("Top 2:", topk(arr, 2));
+      <pre><code>// ML example
+const arr = [10, 20, 5, 30];
+console.log(topk(arr, 2)); // [30, 20]
 
-const product = securetensor(2, 3, 5);
-console.log("Secure product computed!");
+// Audio example
+newSpeech();
+toEnglish();
+talkNow("Testing audio synthesis.");
 
-// Training a file
+// Secure multiplication
+securetensor(2, 3, 5);
+
+// File reading
 const fileInput = document.createElement('input');
 fileInput.type = 'file';
 fileInput.addEventListener('change', (e) =&gt; {
@@ -118,19 +142,9 @@ document.body.appendChild(fileInput);</code></pre>
     <section>
       <h2>Notes</h2>
       <ul>
-        <li><strong>tensor()</strong> is not secure; prefer <code>securetensor()</code> for sensitive operations.</li>
-        <li>Functions like <code>params()</code> set global variables only if undefined.</li>
-        <li>File reading via <code>train()</code> uses <code>FileReader</code> and logs file content to the console.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>References</h2>
-      <p>Credits to those who offered us info so we can make Ignition.js possible:</p>
-      <ul>
-        <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/speechSynthesis" target="_blank">MDN: Speech Synthesis API</a></li>
-        <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/FileReader" target="_blank">MDN: FileReader API</a></li>
-        <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe" target="_blank">MDN: HTML IFrame Sandbox</a></li>
+        <li>Use <code>securetensor()</code> for sensitive computations.</li>
+        <li>Speech recognition requires browser permission.</li>
+        <li>FileReader logs file content in the console.</li>
       </ul>
     </section>
   </main>
